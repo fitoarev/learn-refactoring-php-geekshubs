@@ -1,9 +1,8 @@
 <?php
 
-require_once(dirname(__DIR__).'/Customer.php');
-require_once(dirname(__DIR__).'/Rental.php');
-require_once(dirname(__DIR__).'/Movie.php');
+namespace Refactoring;
 
+use PHPUnit_Framework_TestCase;
 
 class CustomerTest extends PHPUnit_Framework_TestCase
 {
