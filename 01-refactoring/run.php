@@ -1,8 +1,8 @@
 <?php
 
-require_once('Customer.php');
-require_once('Rental.php');
-require_once('Movie.php');
+namespace Refactoring;
+
+require 'vendor/autoload.php';
 
 // define customer
 $customer = new Customer('Jesus LC');
