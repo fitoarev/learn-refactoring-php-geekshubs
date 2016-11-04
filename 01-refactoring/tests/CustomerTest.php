@@ -8,7 +8,8 @@ class CustomerTest extends PHPUnit_Framework_TestCase
 {
     public $customer;
 
-    public function setUp(){
+    public function setUp()
+    {
         $this->customer = new Customer("Joe");
     }
 
