@@ -33,7 +33,7 @@ class Customer
         foreach ($rentals as $rental) {
             $totalAmount += $rental->obtainCharge();
 
-            $frequentRenterPoints = $frequentRenterPoints + $this->calculateFrequentRenterPoints($rental);
+            $frequentRenterPoints = $frequentRenterPoints + $rental->calculateFrequentRenterPoints($rental);
 
 
             //show figures for this rental
@@ -45,23 +45,5 @@ class Customer
 
 
         return $result;
-    }
-
-    /**
-     * @param $rental
-     * @return mixed
-     */
-    private function calculateFrequentRenterPoints($rental)
-    {
-        $frequentRenterPoints = 1;
-        // add bonus for a two day new release rental
-        if (($rental->getMovie()->getPriceCode() == Movie::NEW_RELEASE)
-            &&
-            $rental->getDaysRented() > 1
-        ) {
-            $frequentRenterPoints = $frequentRenterPoints + 1;
-        }
-
-        return $frequentRenterPoints;
     }
 }
