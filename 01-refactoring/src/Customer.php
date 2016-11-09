@@ -31,14 +31,12 @@ class Customer
         $result = "Rental Record for " . $this->getName() . "\n";
 
         foreach ($rentals as $rental) {
-            $thisAmount = $rental->obtainCharge();
-
-            $totalAmount += $thisAmount;
+            $totalAmount += $rental->obtainCharge();
             $frequentRenterPoints = $this->calculateFrequentRenterPoints($frequentRenterPoints, $rental);
 
 
             //show figures for this rental
-            $result .= "\t" . $rental->getMovie()->getTitle() . "\t" . $thisAmount . "\n";
+            $result .= "\t" . $rental->getMovie()->getTitle() . "\t" . $rental->obtainCharge() . "\n";
         }
         //add footer lines
         $result .= "Amount owed is " . $totalAmount . "\n";
