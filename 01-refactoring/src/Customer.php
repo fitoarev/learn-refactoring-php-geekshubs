@@ -31,7 +31,7 @@ class Customer
         $result = "Rental Record for " . $this->getName() . "\n";
 
         foreach ($rentals as $rental) {
-            $thisAmount = $this->calculateAmountFor($rental);
+            $thisAmount = $this->obtainCharge($rental);
 
             $totalAmount += $thisAmount;
 
@@ -62,7 +62,7 @@ class Customer
      * @param $each
      * @return float|int
      */
-    private function calculateAmountFor($each)
+    private function obtainCharge($each)
     {
         $thisAmount = 0;
 
