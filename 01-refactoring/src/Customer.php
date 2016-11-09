@@ -33,7 +33,7 @@ class Customer
         foreach ($rentals as $rental) {
             $totalAmount += $rental->obtainCharge();
 
-            $frequentRenterPoints = $frequentRenterPoints + $rental->calculateFrequentRenterPoints($rental);
+            $frequentRenterPoints = $frequentRenterPoints + $rental->calculateFrequentRenterPoints();
 
 
             //show figures for this rental

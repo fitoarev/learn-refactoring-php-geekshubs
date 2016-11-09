@@ -52,20 +52,29 @@ class Rental
     }
 
     /**
-     * @param $rental
-     * @return mixed
+     * @return int
      */
-    public function calculateFrequentRenterPoints($rental)
+    public function calculateFrequentRenterPoints()
     {
         $frequentRenterPoints = 1;
-        // add bonus for a two day new release rental
-        if (($rental->getMovie()->getPriceCode() == Movie::NEW_RELEASE)
+        $frequentRenterPoints = $frequentRenterPoints + $this->addBonusForNewRelease();
+
+        return $frequentRenterPoints;
+    }
+
+    /**
+     * @return int
+     */
+    private function addBonusForNewRelease()
+    {
+        $frequentRenterPoints = 0;
+        if (($this->getMovie()->getPriceCode() == Movie::NEW_RELEASE)
             &&
-            $rental->getDaysRented() > 1
+            $this->getDaysRented() > 1
         ) {
             $frequentRenterPoints = $frequentRenterPoints + 1;
+            return $frequentRenterPoints;
         }
-
         return $frequentRenterPoints;
     }
 }
