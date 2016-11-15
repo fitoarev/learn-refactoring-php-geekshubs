@@ -16,15 +16,7 @@ abstract class Price
      */
     public function obtainFrequentRenterPoints($daysRented)
     {
-        return 1 + $this->addBonusPoints($daysRented);
-    }
-
-    /**
-     * @return int
-     */
-    private function addBonusPoints($daysRented)
-    {
-        $frequentRenterPoints = 0;
+        $frequentRenterPoints = 1;
         if (($this->getPriceCode() == Movie::NEW_RELEASE)
             &&
             $daysRented > 1
