@@ -16,13 +16,6 @@ abstract class Price
      */
     public function obtainFrequentRenterPoints($daysRented)
     {
-        $frequentRenterPoints = 1;
-        if (($this->getPriceCode() == Movie::NEW_RELEASE)
-            &&
-            $daysRented > 1
-        ) {
-            $frequentRenterPoints = $frequentRenterPoints + 1;
-        }
-        return $frequentRenterPoints;
+        return 1;
     }
 }
