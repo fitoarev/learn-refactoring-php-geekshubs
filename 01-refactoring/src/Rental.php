@@ -42,7 +42,7 @@ class Rental
      */
     public function calculateFrequentRenterPoints()
     {
-        return 1 + $this->addBonusPoints();
+        return $this->getMovie()->calculateFrequentRenterPoints($this->getDaysRented());
     }
 
     /**
