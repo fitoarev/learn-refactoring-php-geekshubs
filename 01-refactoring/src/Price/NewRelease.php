@@ -4,7 +4,7 @@ namespace Refactoring\Price;
 
 use Refactoring\Movie;
 
-class NewRelease implements Price
+class NewRelease extends Price
 {
     public function getPriceCode()
     {
