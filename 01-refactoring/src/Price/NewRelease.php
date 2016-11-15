@@ -10,4 +10,16 @@ class NewRelease extends Price
     {
         return Movie::NEW_RELEASE;
     }
+
+    /**
+     * @param int $daysRented
+     * @return float
+     */
+    public function obtainCharge($daysRented)
+    {
+        $thisAmount = 0;
+        $thisAmount += $daysRented * 3;
+
+        return $thisAmount;
+    }
 }
