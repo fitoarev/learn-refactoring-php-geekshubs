@@ -48,6 +48,21 @@ class Movie
         return $this->_price->obtainCharge($daysRented);
     }
 
+    /**
+     * @return int
+     */
+    public function addBonusPoints($daysRented)
+    {
+        $frequentRenterPoints = 0;
+        if (($this->getPriceCode() == Movie::NEW_RELEASE)
+            &&
+            $daysRented > 1
+        ) {
+            $frequentRenterPoints = $frequentRenterPoints + 1;
+        }
+        return $frequentRenterPoints;
+    }
+
     private function setPrice($priceCode)
     {
         switch ($priceCode) {

@@ -50,13 +50,6 @@ class Rental
      */
     private function addBonusPoints()
     {
-        $frequentRenterPoints = 0;
-        if (($this->getMovie()->getPriceCode() == Movie::NEW_RELEASE)
-            &&
-            $this->getDaysRented() > 1
-        ) {
-            $frequentRenterPoints = $frequentRenterPoints + 1;
-        }
-        return $frequentRenterPoints;
+        return $this->getMovie()->addBonusPoints($this->getDaysRented());
     }
 }
