@@ -4,7 +4,14 @@ namespace Refactoring;
 
 class Rental
 {
+    /**
+     * @var Movie
+     */
     private $_movie;
+
+    /**
+     * @var int
+     */
     private $_daysRented;
 
     public function __construct($movie, $daysRented)

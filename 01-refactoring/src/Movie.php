@@ -12,7 +12,12 @@ class Movie
     const CHILDRENS = 2;
     const REGULAR = 0;
     const NEW_RELEASE = 1;
+
+    /**
+     * @var string
+     */
     private $_title;
+
     /**
      * @var Price
      */
@@ -27,11 +32,6 @@ class Movie
     public function getPriceCode()
     {
         return $this->_price->getPriceCode();
-    }
-
-    public function setPriceCode($arg)
-    {
-        $this->_price = $arg;
     }
 
     public function getTitle()
