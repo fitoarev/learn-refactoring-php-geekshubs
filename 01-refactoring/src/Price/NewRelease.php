@@ -17,9 +17,6 @@ class NewRelease extends Price
      */
     public function obtainCharge($daysRented)
     {
-        $thisAmount = 0;
-        $thisAmount += $daysRented * 3;
-
-        return $thisAmount;
+        return $daysRented * 3;
     }
 }
