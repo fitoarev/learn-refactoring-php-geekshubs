@@ -7,10 +7,10 @@ namespace CodelyTV\FinderKata\Algorithm;
 final class F
 {
     /** @var Person */
-    public $p1;
+    public $person1;
 
     /** @var Person */
-    public $p2;
+    public $person2;
 
     /** @var int */
     public $d;
