@@ -13,5 +13,5 @@ final class F
     public $person2;
 
     /** @var int */
-    public $d;
+    public $distanceBetweenBirthdays;
 }
