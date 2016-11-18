@@ -6,6 +6,6 @@ namespace CodelyTV\FinderKata\Algorithm;
 
 interface FinderCriteria
 {
-    const ONE = 1;
-    const TWO = 2;
+    const CLOSET_BIRTHDAYS = 1;
+    const FURTHEST_BIRTHDAYS = 2;
 }

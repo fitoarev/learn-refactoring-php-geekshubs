@@ -48,7 +48,7 @@ final class FinderTest extends TestCase
         $list   = [];
         $finder = new Finder($list);
 
-        $result = $finder->find(FinderCriteria::ONE);
+        $result = $finder->find(FinderCriteria::CLOSET_BIRTHDAYS);
 
         $this->assertEquals(null, $result->person1);
         $this->assertEquals(null, $result->person2);
@@ -61,7 +61,7 @@ final class FinderTest extends TestCase
         $list[] = $this->sue;
         $finder = new Finder($list);
 
-        $result = $finder->find(FinderCriteria::ONE);
+        $result = $finder->find(FinderCriteria::CLOSET_BIRTHDAYS);
 
         $this->assertEquals(null, $result->person1);
         $this->assertEquals(null, $result->person2);
@@ -75,7 +75,7 @@ final class FinderTest extends TestCase
         $list[] = $this->greg;
         $finder = new Finder($list);
 
-        $result = $finder->find(FinderCriteria::ONE);
+        $result = $finder->find(FinderCriteria::CLOSET_BIRTHDAYS);
 
         $this->assertEquals($this->sue, $result->person1);
         $this->assertEquals($this->greg, $result->person2);
@@ -89,7 +89,7 @@ final class FinderTest extends TestCase
         $list[] = $this->greg;
         $finder = new Finder($list);
 
-        $result = $finder->find(FinderCriteria::TWO);
+        $result = $finder->find(FinderCriteria::FURTHEST_BIRTHDAYS);
 
         $this->assertEquals($this->greg, $result->person1);
         $this->assertEquals($this->mike, $result->person2);
@@ -105,7 +105,7 @@ final class FinderTest extends TestCase
         $list[] = $this->greg;
         $finder = new Finder($list);
 
-        $result = $finder->find(FinderCriteria::TWO);
+        $result = $finder->find(FinderCriteria::FURTHEST_BIRTHDAYS);
 
         $this->assertEquals($this->sue, $result->person1);
         $this->assertEquals($this->sarah, $result->person2);
@@ -123,7 +123,7 @@ final class FinderTest extends TestCase
         $list[] = $this->greg;
         $finder = new Finder($list);
 
-        $result = $finder->find(FinderCriteria::ONE);
+        $result = $finder->find(FinderCriteria::CLOSET_BIRTHDAYS);
 
         $this->assertEquals($this->sue, $result->person1);
         $this->assertEquals($this->greg, $result->person2);
