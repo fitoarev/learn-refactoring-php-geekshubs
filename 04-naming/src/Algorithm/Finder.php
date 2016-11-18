@@ -14,7 +14,7 @@ final class Finder
         $this->_personList = $personList;
     }
 
-    public function find(int $ft): PersonPair
+    public function find(int $aFinderCriteria): PersonPair
     {
         /** @var PersonPair[] $personPairList */
         $personPairList = [];
@@ -45,14 +45,14 @@ final class Finder
         $answer = $personPairList[0];
 
         foreach ($personPairList as $result) {
-            switch ($ft) {
-                case FT::ONE:
+            switch ($aFinderCriteria) {
+                case FinderCriteria::ONE:
                     if ($result->distanceBetweenBirthdays < $answer->distanceBetweenBirthdays) {
                         $answer = $result;
                     }
                     break;
 
-                case FT::TWO:
+                case FinderCriteria::TWO:
                     if ($result->distanceBetweenBirthdays > $answer->distanceBetweenBirthdays) {
                         $answer = $result;
                     }
