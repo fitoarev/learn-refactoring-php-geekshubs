@@ -42,70 +42,13 @@ class Queue
 
         foreach ($queues as $queueId => $queue) {
             if (ORDER_STATUS_PAID === $queue['orderStatus']) {
-                // 更新訂單狀態為付款
-                $order = array(
-                    'orderStatus' => ORDER_STATUS_PAID,
-                );
-                $where = array(
-                    'orderNumber = ?' => $queue['orderNumber'],
-                );
-                $this->_dao->update('orders', $order, $where);
-
-                $this->addDebugInfo('Status ' . $order['orderStatus'], $queue['orderNumber']);
-
-            } elseif (ORDER_STATUS_INVOICE === $queue['orderStatus']) { // 已開發票
-                // 寫入發票號碼
-                $order = array(
-                    'invoiceNumber' => $queue['invoiceNumber'],
-                    'orderStatus' => ORDER_STATUS_INVOICE,
-                );
-                $where = array(
-                    'orderNumber = ?' => $queue['orderNumber'],
-                );
-                $this->_dao->update('orders', $order, $where);
-
-                $this->addDebugInfo('Status ' . $order['orderStatus'], $queue['orderNumber']);
-
-                // 寄送發票通知
-                $order = $this->_dao->fetchRow('orders', $where);
-                $this->_mailer->setSubject('訂單 ' . $order['orderNumber'] . ' 發票通知');
-                $this->_mailer->setBody('發票通知內容');
-                $this->_mailer->setFrom('service@company.com');
-                $this->_mailer->addAddress($order['shopperEmail']);
-                $this->_mailer->send();
-
-            } elseif (ORDER_STATUS_DELIVERED === $queue['orderStatus']) { // 已出貨
-                // 寫入出貨單號
-                $order = array(
-                    'deliverNumber' => $queue['deliverNumber'],
-                    'orderStatus' => ORDER_STATUS_DELIVERED,
-                );
-                $where = array(
-                    'orderNumber = ?' => $queue['orderNumber'],
-                );
-                $this->_dao->update('orders', $order, $where);
-
-                $this->addDebugInfo('Status ' . $order['orderStatus'], $queue['orderNumber']);
-
-                // 寄送出貨通知
-                $order = $this->_dao->fetchRow('orders', $where);
-                $this->_mailer->setSubject('訂單 ' . $order['orderNumber'] . ' 出貨通知');
-                $this->_mailer->setBody('出貨通知內容');
-                $this->_mailer->setFrom('service@company.com');
-                $this->_mailer->addAddress($order['receiverEmail']);
-                $this->_mailer->send();
-
-            } elseif (ORDER_STATUS_CLOSED === $queue['orderStatus']) { // 已結案
-                // 更新訂單狀態為結案
-                $order = array(
-                    'orderStatus' => ORDER_STATUS_CLOSED,
-                );
-                $where = array(
-                    'orderNumber = ?' => $queue['orderNumber'],
-                );
-                $this->_dao->update('orders', $order, $where);
-
-                $this->addDebugInfo('Status ' . $order['orderStatus'], $queue['orderNumber']);
+                $this->handlePaid($queue);
+            } elseif (ORDER_STATUS_INVOICE === $queue['orderStatus']) {
+                $this->handleInvoice($queue);
+            } elseif (ORDER_STATUS_DELIVERED === $queue['orderStatus']) {
+                $this->handleDelivered($queue);
+            } elseif (ORDER_STATUS_CLOSED === $queue['orderStatus']) {
+                $this->handleClosed($queue);
             }
 
             // 刪除舊的 Queue
@@ -116,4 +59,85 @@ class Queue
         }
     }
 
+    /**
+     * @param $queue
+     */
+    private function handlePaid($queue)
+    {
+        $order = array(
+            'orderStatus' => ORDER_STATUS_PAID,
+        );
+        $where = array(
+            'orderNumber = ?' => $queue['orderNumber'],
+        );
+        $this->_dao->update('orders', $order, $where);
+
+        $this->addDebugInfo('Status ' . $order['orderStatus'], $queue['orderNumber']);
+    }
+
+    /**
+     * @param $queue
+     */
+    private function handleInvoice($queue)
+    {
+        $order = array(
+            'invoiceNumber' => $queue['invoiceNumber'],
+            'orderStatus' => ORDER_STATUS_INVOICE,
+        );
+        $where = array(
+            'orderNumber = ?' => $queue['orderNumber'],
+        );
+        $this->_dao->update('orders', $order, $where);
+
+        $this->addDebugInfo('Status ' . $order['orderStatus'], $queue['orderNumber']);
+
+        // 寄送發票通知
+        $order = $this->_dao->fetchRow('orders', $where);
+        $this->_mailer->setSubject('訂單 ' . $order['orderNumber'] . ' 發票通知');
+        $this->_mailer->setBody('發票通知內容');
+        $this->_mailer->setFrom('service@company.com');
+        $this->_mailer->addAddress($order['shopperEmail']);
+        $this->_mailer->send();
+    }
+
+    /**
+     * @param $queue
+     */
+    private function handleDelivered($queue)
+    {
+        $order = array(
+            'deliverNumber' => $queue['deliverNumber'],
+            'orderStatus' => ORDER_STATUS_DELIVERED,
+        );
+        $where = array(
+            'orderNumber = ?' => $queue['orderNumber'],
+        );
+        $this->_dao->update('orders', $order, $where);
+
+        $this->addDebugInfo('Status ' . $order['orderStatus'], $queue['orderNumber']);
+
+        // 寄送出貨通知
+        $order = $this->_dao->fetchRow('orders', $where);
+        $this->_mailer->setSubject('訂單 ' . $order['orderNumber'] . ' 出貨通知');
+        $this->_mailer->setBody('出貨通知內容');
+        $this->_mailer->setFrom('service@company.com');
+        $this->_mailer->addAddress($order['receiverEmail']);
+        $this->_mailer->send();
+    }
+
+    /**
+     * @param $queue
+     */
+    private function handleClosed($queue)
+    {
+        $order = array(
+            'orderStatus' => ORDER_STATUS_CLOSED,
+        );
+        $where = array(
+            'orderNumber = ?' => $queue['orderNumber'],
+        );
+        $this->_dao->update('orders', $order, $where);
+
+        $this->addDebugInfo('Status ' . $order['orderStatus'], $queue['orderNumber']);
+    }
 }
