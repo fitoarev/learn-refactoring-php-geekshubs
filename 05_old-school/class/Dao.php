@@ -1,5 +1,7 @@
 <?php
 
+namespace Refactoring;
+
 class Dao
 {
     public function __construct($host, $user, $pass, $dbname)

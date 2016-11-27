@@ -1,6 +1,11 @@
 <?php
 
-class Task_Queue
+namespace Refactoring\Task;
+
+use Refactoring\Dao;
+use Refactoring\Mailer;
+
+class Queue
 {
     protected $_dao = null;
 

@@ -1,9 +1,15 @@
 <?php
 
-class Task_QueueTest extends \PHPUnit_Framework_TestCase
+namespace Refactoring\Test\Unit\Task;
+
+use Refactoring\Task\Queue;
+use Refactoring\Test\Mocks\DaoMock;
+use Refactoring\Test\Mocks\MailerMock;
+
+class QueueTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Task_Queue
+     * @var Queue
      */
     protected $_task = null;
 
@@ -90,7 +96,7 @@ class Task_QueueTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->_task = new Task_Queue();
+        $this->_task = new Queue();
         $this->_dao = new DaoMock($this->_testData);
         $this->_mailer = new MailerMock();
 

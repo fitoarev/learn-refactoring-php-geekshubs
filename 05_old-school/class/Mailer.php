@@ -1,5 +1,7 @@
 <?php
 
+namespace Refactoring;
+
 class Mailer
 {
 

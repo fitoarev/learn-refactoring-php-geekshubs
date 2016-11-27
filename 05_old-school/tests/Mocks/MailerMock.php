@@ -1,5 +1,9 @@
 <?php
 
+namespace Refactoring\Test\Mocks;
+
+use Refactoring\Mailer;
+
 class MailerMock extends Mailer
 {
 

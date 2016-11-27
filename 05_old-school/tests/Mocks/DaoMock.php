@@ -1,5 +1,9 @@
 <?php
 
+namespace Refactoring\Test\Mocks;
+
+use Refactoring\Dao;
+
 class DaoMock extends Dao
 {
     protected $_data = array();
