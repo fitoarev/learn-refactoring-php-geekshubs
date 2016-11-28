@@ -6,7 +6,9 @@ class CatApi
 {
     public function getRandomImage()
     {
-        if ($this->isNotInCache()) {
+        if (!$this->isNotInCache()) {
+            return file_get_contents(__DIR__ . '/../../cache/random');
+        } else {
             $responseXml = @file_get_contents(
                 'http://thecatapi.com/api/images/get?format=xml&type=jpg'
             );
@@ -23,8 +25,6 @@ class CatApi
             );
 
             return (string)$responseElement->data->images[0]->image->url;
-        } else {
-            return file_get_contents(__DIR__ . '/../../cache/random');
         }
     }
 
