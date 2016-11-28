@@ -26,16 +26,8 @@ class CatApi
      */
     private function isInCache()
     {
-        return !$this->isNotInCache();
-    }
-
-    /**
-     * @return bool
-     */
-    private function isNotInCache()
-    {
-        return !file_exists($this->cacheFilePath)
-            || (time() - filemtime($this->cacheFilePath)) > 3;
+        return file_exists($this->cacheFilePath)
+            && (time() - filemtime($this->cacheFilePath)) <= 3;
     }
 
     /**
