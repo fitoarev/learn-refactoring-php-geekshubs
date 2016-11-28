@@ -18,7 +18,7 @@ class CatApi
             return file_get_contents($this->cacheFilePath);
         }
 
-        return $this->retrieveRandomImage();
+        return $this->retrieveRandomImage($format = 'xml', $type = 'jpg');
     }
 
     /**
@@ -31,12 +31,14 @@ class CatApi
     }
 
     /**
+     * @param string $format
+     * @param string $type
      * @return string
      */
-    private function retrieveRandomImage()
+    private function retrieveRandomImage($format, $type)
     {
         try {
-            $randomImage = new RandomImage('xml', 'jpg');
+            $randomImage = new RandomImage($format, $type);
 
             return $randomImage->save($this->cacheFilePath);
         } catch (CatApiIsDownException $exception) {
