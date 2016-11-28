@@ -16,9 +16,8 @@ class CatApi
     public function getRandomImage()
     {
         if ($this->isInCache()) {
-            return file_get_contents($this->cacheFilePath);
+            return $this->retrieveCachedImage();
         }
-
         return $this->retrieveRandomImage($format = 'xml', $type = 'jpg');
     }
 
@@ -45,5 +44,13 @@ class CatApi
         } catch (CatApiIsDownException $exception) {
             return 'http://cdn.my-cool-website.com/default.jpg';
         }
+    }
+
+    /**
+     * @return string
+     */
+    private function retrieveCachedImage()
+    {
+        return file_get_contents($this->cacheFilePath);
     }
 }
