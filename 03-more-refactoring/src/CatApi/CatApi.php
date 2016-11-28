@@ -2,6 +2,8 @@
 
 namespace CatApi;
 
+use CatApi\Exceptions\CatApiIsDownException;
+
 class CatApi
 {
     /** @var string */
@@ -41,30 +43,12 @@ class CatApi
      */
     private function retrieveRandomImage()
     {
-        $responseXml = @file_get_contents(
-            'http://thecatapi.com/api/images/get?format=xml&type=jpg'
-        );
+        try {
+            $randomImage = new RandomImage('xml', 'jpg');
 
-        if (!$responseXml) {
-            // the cat API is down or something
+            return $randomImage->save($this->cacheFilePath);
+        } catch (CatApiIsDownException $exception) {
             return 'http://cdn.my-cool-website.com/default.jpg';
         }
-
-        return $this->saveRandomImage($responseXml);
-    }
-
-    /**
-     * @param $responseXml
-     * @return string
-     */
-    private function saveRandomImage($responseXml)
-    {
-        $responseElement = new \SimpleXMLElement($responseXml);
-
-        $imageUrl = (string)$responseElement->data->images[0]->image->url;
-
-        file_put_contents($this->cacheFilePath, $imageUrl);
-
-        return $imageUrl;
     }
 }
