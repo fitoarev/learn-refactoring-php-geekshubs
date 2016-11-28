@@ -10,6 +10,9 @@ class RandomImage
 
     /**
      * RandomImage constructor.
+     * @param string $format
+     * @param string $type
+     * @throws \CatApi\Exceptions\CatApiIsDownException
      */
     public function __construct($format, $type)
     {
@@ -22,6 +25,10 @@ class RandomImage
         }
     }
 
+    /**
+     * @param string $path
+     * @return string
+     */
     public function save($path)
     {
         $responseElement = new \SimpleXMLElement($this->response);
