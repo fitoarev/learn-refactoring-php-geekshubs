@@ -27,7 +27,23 @@ class CatApi
     private function isInCache()
     {
         return file_exists($this->cacheFilePath)
-            && (time() - filemtime($this->cacheFilePath)) <= self::SECONDS_IN_CACHE;
+            && ($this->numberSecondOfTheFileCached() <= self::SECONDS_IN_CACHE);
+    }
+
+    /**
+     * @return int
+     */
+    private function numberSecondOfTheFileCached()
+    {
+        return time() - filemtime($this->cacheFilePath);
+    }
+
+    /**
+     * @return string
+     */
+    private function retrieveCachedImage()
+    {
+        return file_get_contents($this->cacheFilePath);
     }
 
     /**
@@ -39,18 +55,9 @@ class CatApi
     {
         try {
             $randomImage = new RandomImage($format, $type);
-
             return $randomImage->save($this->cacheFilePath);
         } catch (CatApiIsDownException $exception) {
             return 'http://cdn.my-cool-website.com/default.jpg';
         }
-    }
-
-    /**
-     * @return string
-     */
-    private function retrieveCachedImage()
-    {
-        return file_get_contents($this->cacheFilePath);
     }
 }
