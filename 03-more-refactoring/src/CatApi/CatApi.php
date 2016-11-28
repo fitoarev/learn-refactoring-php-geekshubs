@@ -18,7 +18,7 @@ class CatApi
         if ($this->isInCache()) {
             return $this->retrieveCachedImage();
         }
-        return $this->retrieveRandomImage($format = 'xml', $type = 'jpg');
+        return $this->retrieveRandomImage('xml', 'jpg');
     }
 
     /**
