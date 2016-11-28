@@ -12,6 +12,28 @@ class CatApi
             return file_get_contents($this->cacheFilePath);
         }
 
+        return $this->retrieveRandomImage();
+    }
+
+    private function isInCache()
+    {
+        return !$this->isNotInCache();
+    }
+
+    /**
+     * @return bool
+     */
+    private function isNotInCache()
+    {
+        return !file_exists($this->cacheFilePath)
+            || (time() - filemtime($this->cacheFilePath)) > 3;
+    }
+
+    /**
+     * @return string
+     */
+    private function retrieveRandomImage()
+    {
         $responseXml = @file_get_contents(
             'http://thecatapi.com/api/images/get?format=xml&type=jpg'
         );
@@ -29,19 +51,5 @@ class CatApi
         );
 
         return (string)$responseElement->data->images[0]->image->url;
-    }
-
-    private function isInCache()
-    {
-        return !$this->isNotInCache();
-    }
-
-    /**
-     * @return bool
-     */
-    private function isNotInCache()
-    {
-        return !file_exists($this->cacheFilePath)
-            || (time() - filemtime($this->cacheFilePath)) > 3;
     }
 }
