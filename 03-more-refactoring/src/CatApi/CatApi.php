@@ -6,6 +6,7 @@ use CatApi\Exceptions\CatApiIsDownException;
 
 class CatApi
 {
+    const SECONDS_IN_CACHE = 3;
     /** @var string */
     private $cacheFilePath = __DIR__ . '/../../cache/random';
 
@@ -27,7 +28,7 @@ class CatApi
     private function isInCache()
     {
         return file_exists($this->cacheFilePath)
-            && (time() - filemtime($this->cacheFilePath)) <= 3;
+            && (time() - filemtime($this->cacheFilePath)) <= self::SECONDS_IN_CACHE;
     }
 
     /**
