@@ -55,9 +55,9 @@ class CatApi
     {
         try {
             $randomImage = new RandomImage($format, $type);
-            return $randomImage->save($this->cacheFilePath);
         } catch (CatApiIsDownException $exception) {
             return 'http://cdn.my-cool-website.com/default.jpg';
         }
+        return $randomImage->save($this->cacheFilePath);
     }
 }
