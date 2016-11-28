@@ -4,8 +4,12 @@ namespace CatApi;
 
 class CatApi
 {
+    /** @var string */
     private $cacheFilePath = __DIR__ . '/../../cache/random';
 
+    /**
+     * @return string
+     */
     public function getRandomImage()
     {
         if ($this->isInCache()) {
@@ -15,6 +19,9 @@ class CatApi
         return $this->retrieveRandomImage();
     }
 
+    /**
+     * @return bool
+     */
     private function isInCache()
     {
         return !$this->isNotInCache();
