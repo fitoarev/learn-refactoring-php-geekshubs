@@ -6,6 +6,7 @@ use CatApi\Exceptions\CatApiIsDownException;
 
 class RandomImage
 {
+    /** @var string */
     private $response;
 
     /**
