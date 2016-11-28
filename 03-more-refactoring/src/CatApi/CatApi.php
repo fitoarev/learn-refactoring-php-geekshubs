@@ -45,11 +45,10 @@ class CatApi
 
         $responseElement = new \SimpleXMLElement($responseXml);
 
-        file_put_contents(
-            $this->cacheFilePath,
-            (string)$responseElement->data->images[0]->image->url
-        );
+        $imageUrl = (string) $responseElement->data->images[0]->image->url;
 
-        return (string)$responseElement->data->images[0]->image->url;
+        file_put_contents($this->cacheFilePath, $imageUrl);
+
+        return $imageUrl;
     }
 }
