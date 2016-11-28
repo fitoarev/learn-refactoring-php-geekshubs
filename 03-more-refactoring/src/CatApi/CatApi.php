@@ -6,8 +6,7 @@ class CatApi
 {
     public function getRandomImage()
     {
-        if (!file_exists(__DIR__ . '/../../cache/random')
-            || time() - filemtime(__DIR__ . '/../../cache/random') > 3) {
+        if ($this->isNotInCache()) {
             $responseXml = @file_get_contents(
                 'http://thecatapi.com/api/images/get?format=xml&type=jpg'
             );
@@ -27,5 +26,14 @@ class CatApi
         } else {
             return file_get_contents(__DIR__ . '/../../cache/random');
         }
+    }
+
+    /**
+     * @return bool
+     */
+    private function isNotInCache()
+    {
+        return !file_exists(__DIR__ . '/../../cache/random')
+            || time() - filemtime(__DIR__ . '/../../cache/random') > 3;
     }
 }
