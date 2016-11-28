@@ -43,9 +43,18 @@ class CatApi
             return 'http://cdn.my-cool-website.com/default.jpg';
         }
 
+        return $this->saveRandomImage($responseXml);
+    }
+
+    /**
+     * @param $responseXml
+     * @return string
+     */
+    private function saveRandomImage($responseXml)
+    {
         $responseElement = new \SimpleXMLElement($responseXml);
 
-        $imageUrl = (string) $responseElement->data->images[0]->image->url;
+        $imageUrl = (string)$responseElement->data->images[0]->image->url;
 
         file_put_contents($this->cacheFilePath, $imageUrl);
 
