@@ -8,7 +8,7 @@ class CatApi
 
     public function getRandomImage()
     {
-        if (!$this->isNotInCache()) {
+        if ($this->isInCache()) {
             return file_get_contents($this->cacheFilePath);
         } else {
             $responseXml = @file_get_contents(
@@ -30,6 +30,10 @@ class CatApi
         }
     }
 
+    private function isInCache()
+    {
+        return ! $this->isNotInCache();
+    }
     /**
      * @return bool
      */
