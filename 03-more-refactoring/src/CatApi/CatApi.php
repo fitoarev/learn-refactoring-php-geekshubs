@@ -16,18 +16,11 @@ class CatApi
     {
         $cachedFile = new CachedFile();
 
-        if ($cachedFile->isInCache()) {
-            return $this->retrieveCachedImage();
+        if ($cachedFile->isValid()) {
+            return $cachedFile->retrieve();
         }
-        return $this->retrieveRandomImage('xml', 'jpg');
-    }
 
-    /**
-     * @return string
-     */
-    private function retrieveCachedImage()
-    {
-        return file_get_contents($this->cacheFilePath);
+        return $this->retrieveRandomImage('xml', 'jpg');
     }
 
     /**

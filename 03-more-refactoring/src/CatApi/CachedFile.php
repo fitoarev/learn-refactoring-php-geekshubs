@@ -9,7 +9,7 @@ class CachedFile
     /**
      * @return bool
      */
-    public function isInCache()
+    public function isValid()
     {
         return file_exists(self::CACHE_FILE_PATH)
             && ($this->numberSecondOfTheFileCached() <= self::SECONDS_IN_CACHE);
@@ -21,5 +21,13 @@ class CachedFile
     private function numberSecondOfTheFileCached()
     {
         return time() - filemtime(self::CACHE_FILE_PATH);
+    }
+
+    /**
+     * @return string
+     */
+    public function retrieve()
+    {
+        return file_get_contents(self::CACHE_FILE_PATH);
     }
 }
