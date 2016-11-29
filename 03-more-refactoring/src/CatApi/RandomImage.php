@@ -32,12 +32,19 @@ class RandomImage
      */
     public function save($path)
     {
-        $responseElement = new \SimpleXMLElement($this->response);
-
-        $imageUrl = (string)$responseElement->data->images[0]->image->url;
+        $imageUrl = $this->obtainUrl(new \SimpleXMLElement($this->response));
 
         file_put_contents($path, $imageUrl);
 
         return $imageUrl;
+    }
+
+    /**
+     * @param $responseElement
+     * @return string
+     */
+    private function obtainUrl($responseElement)
+    {
+        return (string)$responseElement->data->images[0]->image->url;
     }
 }

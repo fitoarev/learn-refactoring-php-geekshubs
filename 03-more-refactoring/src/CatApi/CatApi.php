@@ -6,6 +6,7 @@ use CatApi\Exceptions\CatApiIsDownException;
 
 class CatApi
 {
+    const SECONDS_IN_CACHE = 3;
     /** @var string */
     private $cacheFilePath = __DIR__ . '/../../cache/random';
 
@@ -15,10 +16,9 @@ class CatApi
     public function getRandomImage()
     {
         if ($this->isInCache()) {
-            return file_get_contents($this->cacheFilePath);
+            return $this->retrieveCachedImage();
         }
-
-        return $this->retrieveRandomImage($format = 'xml', $type = 'jpg');
+        return $this->retrieveRandomImage('xml', 'jpg');
     }
 
     /**
@@ -27,7 +27,23 @@ class CatApi
     private function isInCache()
     {
         return file_exists($this->cacheFilePath)
-            && (time() - filemtime($this->cacheFilePath)) <= 3;
+            && ($this->numberSecondOfTheFileCached() <= self::SECONDS_IN_CACHE);
+    }
+
+    /**
+     * @return int
+     */
+    private function numberSecondOfTheFileCached()
+    {
+        return time() - filemtime($this->cacheFilePath);
+    }
+
+    /**
+     * @return string
+     */
+    private function retrieveCachedImage()
+    {
+        return file_get_contents($this->cacheFilePath);
     }
 
     /**
@@ -39,10 +55,9 @@ class CatApi
     {
         try {
             $randomImage = new RandomImage($format, $type);
-
-            return $randomImage->save($this->cacheFilePath);
         } catch (CatApiIsDownException $exception) {
             return 'http://cdn.my-cool-website.com/default.jpg';
         }
+        return $randomImage->save($this->cacheFilePath);
     }
 }
