@@ -27,14 +27,14 @@ class RandomImage
     }
 
     /**
-     * @param string $path
      * @return string
      */
-    public function save($path)
+    public function save()
     {
         $imageUrl = $this->obtainUrl(new \SimpleXMLElement($this->response));
 
-        file_put_contents($path, $imageUrl);
+        $cachedFile = new CachedFile();
+        $cachedFile->persist($imageUrl);
 
         return $imageUrl;
     }

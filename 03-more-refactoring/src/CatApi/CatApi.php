@@ -7,9 +7,6 @@ use CatApi\Exceptions\CatApiIsDownException;
 
 class CatApi
 {
-    /** @var string */
-    private $cacheFilePath = __DIR__ . '/../../cache/random';
-
     /**
      * @return string
      */
@@ -49,6 +46,7 @@ class CatApi
         } catch (CatApiIsDownException $exception) {
             return 'http://cdn.my-cool-website.com/default.jpg';
         }
-        return $randomImage->save($this->cacheFilePath);
+
+        return $randomImage->save();
     }
 }
