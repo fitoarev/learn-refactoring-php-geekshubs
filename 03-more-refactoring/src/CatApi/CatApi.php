@@ -2,6 +2,7 @@
 
 namespace CatApi;
 
+use CatApi\Exceptions\CacheIsInvalidException;
 use CatApi\Exceptions\CatApiIsDownException;
 
 class CatApi
@@ -14,13 +15,26 @@ class CatApi
      */
     public function getRandomImage()
     {
+        try{
+            return $this->retrieveCachedFile();
+        } catch(CacheIsInvalidException $exception) {
+            return $this->retrieveRandomImage('xml', 'jpg');
+        }
+    }
+
+    /**
+     * @return string
+     * @throws \CatApi\Exceptions\CacheIsInvalidException
+     */
+    private function retrieveCachedFile()
+    {
         $cachedFile = new CachedFile();
 
         if ($cachedFile->isValid()) {
             return $cachedFile->retrieve();
+        } else {
+            throw new CacheIsInvalidException();
         }
-
-        return $this->retrieveRandomImage('xml', 'jpg');
     }
 
     /**
